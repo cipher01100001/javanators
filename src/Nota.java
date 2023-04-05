@@ -1,8 +1,8 @@
 public class Nota {
     private double valor;
-    private double porcentaje;
+    private int porcentaje;
 
-    public Nota(double valor, double porcentaje) {
+    public Nota(double valor, int porcentaje) {
         this.valor = valor;
         this.porcentaje = porcentaje;
     }
@@ -11,7 +11,7 @@ public class Nota {
         return valor;
     }
 
-    public double getPorcentaje() {
+    public int getPorcentaje() {
         return porcentaje;
     }
 }
