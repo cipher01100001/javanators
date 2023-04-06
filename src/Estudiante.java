@@ -20,6 +20,15 @@ public class Estudiante {
     public String getNombre() {
         return nombre;
     }
+
+    public String getUsuario() {
+        return usuario;
+    }
+
+    public String getContrasena() {
+        return contrasena;
+    }
+
     public void getInfo() {
         System.out.println("Estudiante: " + this.nombre);
         System.out.println("Usuario: " + this.usuario);
@@ -27,6 +36,14 @@ public class Estudiante {
         System.out.println("Materias: ");
         for (Materia materia : this.materias) {
             System.out.println(" | " + materia.getNombre() + " tiene un valor de " + materia.getCreditos() + " creditos | ");
+        }
+    }
+
+    public void getMaterias() {
+        int contador = 1;
+        for (Materia materia : this.materias) {
+            System.out.println(contador + " | " + materia.getNombre() + " tiene un valor de " + materia.getCreditos() + " creditos | ");
+            contador++;
         }
     }
 
