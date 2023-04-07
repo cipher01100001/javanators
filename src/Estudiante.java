@@ -39,12 +39,8 @@ public class Estudiante {
         }
     }
 
-    public void getMaterias() {
-        int contador = 1;
-        for (Materia materia : this.materias) {
-            System.out.println(contador + " | " + materia.getNombre() + " tiene un valor de " + materia.getCreditos() + " creditos | ");
-            contador++;
-        }
+    public ArrayList<Materia> getMaterias() {
+        return this.materias;
     }
 
     public double getPromedio() {
