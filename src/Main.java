@@ -1,3 +1,4 @@
+import java.security.Principal;
 import java.util.Scanner;
 import java.util.ArrayList;
 
@@ -36,92 +37,220 @@ public class Main {
         materia4.addNota(new Nota(2.1, 30));
         materia4.addNota(new Nota(3.7, 50));
 
+        startMenu(estudiantes);
+    }
+
+    private static void startMenu(ArrayList<Estudiante> estudiantes) {
         Scanner scanner = new Scanner(System.in);
-        System.out.println("Digite 0 para registrar un usuario nuevo o 1 para iniciar sesión:");
-        int respuesta = scanner.nextInt();
+        System.out.println("\n| Menu de inicio |");
+        System.out.println("1. Iniciar sesión");
+        System.out.println("2. Registrarse");
+        System.out.println("3. Terminar");
 
-        if (respuesta == 0) {
-            System.out.println("Para registrarse primero, digite su nombre completo:");
-            scanner.nextLine();
-            String nombre = scanner.nextLine();
-            System.out.println("Digite su nombre de usuario:");
-            String usuario = scanner.nextLine();
+        int opcion = scanner.nextInt();
 
-            String contrasena, confirmcontrasena;
-
-            do {
-                System.out.println("Digite su contraseña");
-                contrasena = scanner.nextLine();
-                System.out.println("Digite nuevamente su contraseña para confirmar:");
-                confirmcontrasena = scanner.nextLine();
-
-                if (!contrasena.equals(confirmcontrasena)) {
-                    System.out.println("Error, las contraseñas no coinciden");
-                }
-            } while (!contrasena.equals(confirmcontrasena));
-
-
-            Estudiante estudiante = new Estudiante(nombre, usuario, contrasena);
-            estudiantes.add(estudiante);
-            System.out.println("Se ha registrado correctamente");
-
-            System.out.println(estudiantes);
-
-            login(estudiantes);
-
-        } else if (respuesta == 1) {
-            login(estudiantes);
+        switch (opcion) {
+            case 1:
+                login(estudiantes, scanner);
+                break;
+            case 2:
+                createAccount(estudiantes, scanner);
+                login(estudiantes, scanner);
+                break;
+            case 3:
+                System.exit(0);
+                break;
+            default:
+                System.out.println("Error, seleccione una opción válida");
         }
     }
 
-    public static void login(ArrayList<Estudiante> estudiantes) {
-        Scanner scanner = new Scanner(System.in);
-        boolean login = false;
-        Estudiante loginUsuario = null;
+    private static void displaySubjects(Estudiante usuario) {
+        System.out.println("Materias de \"" + usuario.getNombre() + "\":");
+        for (Materia materia : usuario.getMaterias()) {
+            System.out.println(" | " + materia.getNombre() + " tiene un valor de " + materia.getCreditos() + " creditos | ");
+        }
+    }
+
+    private static void displayGrades(Estudiante usuario) {
+        System.out.println("Notas de \"" + usuario.getNombre() + "\"");
+        for (Materia materia : usuario.getMaterias()) {
+            System.out.println("Las notas de \"" + materia.getNombre() + "\" son:");
+            for (Nota nota : materia.getNotas()) {
+                System.out.println(nota.getValor() + " | " + nota.getPorcentaje() + "%");
+            }
+        }
+    }
+
+    private static void displayAccountInfo(Estudiante usuario) {
+        System.out.println("Nombre: " + usuario.getNombre());
+        System.out.println("Usuario: " + usuario.getUsuario());
+        System.out.println("Contraseña: " + usuario.getContrasena());
+    }
+
+    private static void principalMenu(ArrayList<Estudiante> estudiantes, Estudiante usuario, Scanner scanner) {
+        boolean salir = false;
+
         do {
-            System.out.println("Inicio de sesión");
-            System.out.println("Digite el nombre de usuario:");
-            String usuario = scanner.nextLine();
-            System.out.println("Digite la contraseña:");
-            String contrasena = scanner.nextLine();
+            System.out.println("\n| Menu Principal |");
+            System.out.println("1- Ver materias");
+            System.out.println("2- Agregar materia");
+            System.out.println("3- Ver notas");
+            System.out.println("4- Agregar nota");
+            System.out.println("4- Ver información de la cuenta");
+            System.out.println("5- Cerrar sesión");
 
-            for (Estudiante estudiante : estudiantes) {
-                if (usuario.equals(estudiante.getUsuario()) && contrasena.equals(estudiante.getContrasena())) {
-                    System.out.println("Inicio sesión correctamente");
-                    login = true;
-                    loginUsuario = estudiante;
-                }
-            }
-            if (!login) {
-                System.out.println("El usuario y/o contraseña no coinciden, inténtelo de nuevo");
-            }
-        } while (!login);
+            int opcion = scanner.nextInt();
 
+            switch (opcion) {
+                case 1:
+                    displaySubjects(usuario);
+                    break;
+                case 2:
+                    inputSubject(usuario, scanner);
+                    break;
+                case 3:
+                    displayGrades(usuario);
+                    break;
+                case 4:
+                    inputGrade(usuario, scanner);
+                    break;
+                case 5:
+                    displayAccountInfo(usuario);
+                    break;
+                case 6:
+                    salir = true;
+                    break;
+                default:
+                    System.out.println("Error, seleccione una opción válida");
+            }
+        } while (!salir);
+
+        System.out.println("Cerro sesión " + usuario.getNombre());
+        startMenu(estudiantes);
+    }
+
+    private static void loginMenu(ArrayList<Estudiante> estudiantes, Scanner scanner) {
+        System.out.println("\n|Menu inicio de sesión|");
+        System.out.println("1- Reintentar");
+        System.out.println("2- Salir al menu de inicio");
+
+        int opcion = scanner.nextInt();
+
+        switch (opcion) {
+            case 1:
+                login(estudiantes, scanner);
+                break;
+            case 2:
+                startMenu(estudiantes);
+                break;
+            default:
+                System.out.println("Error, seleccione una opción válida");
+                break;
+        }
+
+    }
+
+    private static void createAccount(ArrayList<Estudiante> estudiantes, Scanner scanner) {
+        scanner.nextLine();
+        System.out.println("| REGISTRARSE |");
+        System.out.println("Digite su nombre completo:");
+        String nombre = scanner.nextLine();
+        System.out.println("Digite su nombre de usuario:");
+        String usuario = scanner.nextLine();
+
+        String contrasena, confirmcontrasena;
+
+        do {
+            System.out.println("Digite su contraseña");
+            contrasena = scanner.nextLine();
+            System.out.println("Digite nuevamente su contraseña para confirmar:");
+            confirmcontrasena = scanner.nextLine();
+
+            if (!contrasena.equals(confirmcontrasena)) {
+                System.out.println("Error, las contraseñas no coinciden");
+            }
+        } while (!contrasena.equals(confirmcontrasena));
+
+
+        Estudiante estudiante = new Estudiante(nombre, usuario, contrasena);
+        estudiantes.add(estudiante);
+        System.out.println("Se ha registrado correctamente");
+    }
+
+    private static void inputSubject(Estudiante estudiante, Scanner scanner) {
+        scanner.nextLine();
+        System.out.println("| Agregar nueva materia |");
+        System.out.println("Digite el nombre de la materia");
+        String nombre = scanner.nextLine();
+        System.out.println("Digite el numero de creditos que vale \"" + nombre + "\"");
+        int creditos = scanner.nextInt();
+
+        estudiante.addMateria(new Materia(nombre, creditos));
+        System.out.println("Se agrego correctamente la materia \"" + nombre + "\"");
+    }
+
+    private static void inputGrade(Estudiante estudiante, Scanner scanner) {
+        boolean error = false;
+        int contador = 1;
+        int opcion;
+
+        System.out.println("| Agregar notas |");
+        ArrayList<Materia> materias = estudiante.getMaterias();
+
+        do {
+            System.out.println("Selecciona la materia en la que agregaras la nota");
+            for (Materia materia : materias) {
+                System.out.println(contador + "- " + materia.getNombre());
+                contador++;
+            }
+            opcion = scanner.nextInt();
+            if (opcion > materias.size() || opcion <= 0) {
+                System.out.println("Error, seleccione una opción válida");
+                error = true;
+            }
+        } while (error);
+
+        Materia materia = materias.get(opcion - 1);
+
+        System.out.println("Digite la nota:");
+        double nota = scanner.nextDouble();
+
+        System.out.println("Digite el porcentaje de la nota:");
+        int porcentaje = scanner.nextInt();
+
+        materia.addNota(new Nota(nota, porcentaje));
+        System.out.println("La nota fue añadida correctamente en la materia \"" + materia.getNombre() + "\"");
+    }
+
+    private static void login(ArrayList<Estudiante> estudiantes, Scanner scanner) {
+        scanner.nextLine();
+        boolean logged = false;
+        Estudiante loginUsuario = null;
+
+        System.out.println("| INICIO DE SESIÓN |");
+        System.out.println("Digite el nombre de usuario:");
+        String usuario = scanner.nextLine();
+        System.out.println("Digite la contraseña:");
+        String contrasena = scanner.nextLine();
+
+        for (Estudiante estudiante : estudiantes) {
+            if (usuario.equals(estudiante.getUsuario()) && contrasena.equals(estudiante.getContrasena())) {
+                loginUsuario = estudiante;
+                logged = true;
+            }
+        }
+        if (!logged) {
+            System.out.println("El usuario y/o contraseña no coinciden");
+            loginMenu(estudiantes, scanner);
+        }
+
+        System.out.println("Inicio sesión correctamente");
         System.out.println("Bienvenid@ " + loginUsuario.getUsuario());
-        loginUsuario.getInfo();
-        System.out.println("Tienes un promedio de " + loginUsuario.getPromedio());
-        if (loginUsuario.getPromedio() < 3.0) {
-            System.out.println("Actualmente estas perdiendo el semestre");
-        }
+        principalMenu(estudiantes, loginUsuario, scanner);
+
+
         String desicion;
-        System.out.println("¿Desea añadir alguna materia?");
-        desicion = scanner.nextLine().toLowerCase();
-        if (desicion.equals("si")) {
-            String continuar;
-            do {
-                System.out.println("Ingrese el nombre de la materia:");
-                String nombre = scanner.nextLine();
-                System.out.println("Ingrese el número de creditos para la materia \"" + nombre + "\":");
-                int creditos = scanner.nextInt();
-
-                Materia materia = new Materia(nombre, creditos);
-                loginUsuario.addMateria(materia);
-
-                System.out.println("¿Quiere agregar otra materia? Si/No");
-                scanner.nextLine();
-                continuar = scanner.nextLine().toLowerCase();
-            } while (continuar.equals("si"));
-        }
 
         System.out.println("¿Desea añadir notas a alguna de sus materias?");
         desicion = scanner.nextLine().toLowerCase();
@@ -163,10 +292,8 @@ public class Main {
 
             editMateria.getInfo();
             System.out.println("El promedio en esta materia es de: " + editMateria.getPromedio());
-            loginUsuario.getInfo();
             System.out.println("El promedio general es de: " + loginUsuario.getPromedio());
 
         }
-        scanner.close();
     }
 }

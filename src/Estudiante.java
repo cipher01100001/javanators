@@ -29,16 +29,6 @@ public class Estudiante {
         return contrasena;
     }
 
-    public void getInfo() {
-        System.out.println("Estudiante: " + this.nombre);
-        System.out.println("Usuario: " + this.usuario);
-        System.out.println("Contraseña: " + this.contrasena);
-        System.out.println("Materias: ");
-        for (Materia materia : this.materias) {
-            System.out.println(" | " + materia.getNombre() + " tiene un valor de " + materia.getCreditos() + " creditos | ");
-        }
-    }
-
     public ArrayList<Materia> getMaterias() {
         return this.materias;
     }

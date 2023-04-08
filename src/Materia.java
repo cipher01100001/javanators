@@ -31,6 +31,10 @@ public class Materia {
         }
     }
 
+    public ArrayList<Nota> getNotas() {
+        return this.notas;
+    }
+
     public double getPromedio() {
         double notasTotal = 0.0;
         double porcentajeTotal = 0.0;
