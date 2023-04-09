@@ -13,8 +13,8 @@ public class Estudiante {
         this.materias = new ArrayList<>();
     }
 
-    public void addMateria(Materia materia) {
-        materias.add(materia);
+    public void addMateria(String nombre, int creditos) {
+        materias.add(new Materia(nombre, creditos));
     }
 
     public String getNombre() {

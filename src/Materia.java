@@ -11,8 +11,8 @@ public class Materia {
         this.notas = new ArrayList<>();
     }
 
-    public void addNota(Nota nota) {
-        notas.add(nota);
+    public void addNota(double valor, int porcentaje) {
+        notas.add(new Nota(valor, porcentaje));
     }
 
     public String getNombre() {

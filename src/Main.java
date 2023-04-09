@@ -1,4 +1,3 @@
-import java.security.Principal;
 import java.util.Scanner;
 import java.util.ArrayList;
 
@@ -6,69 +5,87 @@ public class Main {
     public static void main(String[] args) {
 
         ArrayList<Estudiante> estudiantes = new ArrayList<>();
-        Estudiante estudiante1 = new Estudiante("Carlos", "ca123", "123");
-        estudiantes.add(estudiante1);
+        addEstudiante(estudiantes, "Carlos", "ca123", "123");
 
-        Materia materia1 = new Materia("Lógica y representación", 3);
-        estudiante1.addMateria(materia1);
-        materia1.addNota(new Nota(3.7, 20));
-        materia1.addNota(new Nota(4.1, 30));
-        materia1.addNota(new Nota(2.7, 50));
+        estudiantes.get(0).addMateria("Lógica y representación", 3);
+        estudiantes.get(0).getMaterias().get(0).addNota(3.7, 20);
+        estudiantes.get(0).getMaterias().get(0).addNota(4.1, 30);
+        estudiantes.get(0).getMaterias().get(0).addNota(2.7, 50);
 
-        Materia materia2 = new Materia("Matemáticas Discretas", 2);
-        estudiante1.addMateria(materia2);
-        materia2.addNota(new Nota(2.7, 20));
-        materia2.addNota(new Nota(3.1, 30));
-        materia2.addNota(new Nota(4.7, 50));
+        estudiantes.get(0).addMateria("Matemáticas Discretas", 2);
+        estudiantes.get(0).getMaterias().get(1).addNota(2.7, 20);
+        estudiantes.get(0).getMaterias().get(1).addNota(3.1, 30);
+        estudiantes.get(0).getMaterias().get(1).addNota(4.7, 50);
 
+        addEstudiante(estudiantes, "nadie", "nadi123", "321");
 
-        Estudiante estudiante2 = new Estudiante("nadie", "nadi123", "321");
-        estudiantes.add(estudiante2);
+        estudiantes.get(1).addMateria("Lógica y representación", 2);
+        estudiantes.get(1).getMaterias().get(0).addNota(2.7, 20);
+        estudiantes.get(1).getMaterias().get(0).addNota(3.1, 30);
+        estudiantes.get(1).getMaterias().get(0).addNota(1.7, 50);
 
-        Materia materia3 = new Materia("Lógica y representación", 2);
-        estudiante2.addMateria(materia3);
-        materia3.addNota(new Nota(2.7, 20));
-        materia3.addNota(new Nota(3.1, 30));
-        materia3.addNota(new Nota(1.7, 50));
+        estudiantes.get(1).addMateria("Matemáticas Discretas", 3);
+        estudiantes.get(1).getMaterias().get(1).addNota(1.7, 20);
+        estudiantes.get(1).getMaterias().get(1).addNota(2.1, 30);
+        estudiantes.get(1).getMaterias().get(1).addNota(3.7, 50);
 
-        Materia materia4 = new Materia("Matemáticas Discretas", 3);
-        estudiante2.addMateria(materia4);
-        materia4.addNota(new Nota(1.7, 20));
-        materia4.addNota(new Nota(2.1, 30));
-        materia4.addNota(new Nota(3.7, 50));
+        estudiantes.get(1).addMateria("English", 4);
+        estudiantes.get(1).getMaterias().get(2).addNota(4.7, 20);
+        estudiantes.get(1).getMaterias().get(2).addNota(1.1, 30);
+        estudiantes.get(1).getMaterias().get(2).addNota(3.2, 25);
+        estudiantes.get(1).getMaterias().get(2).addNota(3.8, 25);
 
         startMenu(estudiantes);
     }
 
+    private static void addEstudiante(ArrayList<Estudiante> estudiantes, String nombre, String usuario, String contrasena) {
+        estudiantes.add(new Estudiante(nombre, usuario, contrasena));
+    }
+
     private static void startMenu(ArrayList<Estudiante> estudiantes) {
         Scanner scanner = new Scanner(System.in);
-        System.out.println("\n| Menu de inicio |");
-        System.out.println("1. Iniciar sesión");
-        System.out.println("2. Registrarse");
-        System.out.println("3. Terminar");
+        boolean salir = false;
+        do {
+            System.out.println("\n| Menu de inicio |");
+            System.out.println("1. Iniciar sesión");
+            System.out.println("2. Registrarse");
+            System.out.println("3. Terminar");
 
-        int opcion = scanner.nextInt();
+            int opcion = scanner.nextInt();
 
-        switch (opcion) {
-            case 1:
-                login(estudiantes, scanner);
-                break;
-            case 2:
-                createAccount(estudiantes, scanner);
-                login(estudiantes, scanner);
-                break;
-            case 3:
-                System.exit(0);
-                break;
-            default:
-                System.out.println("Error, seleccione una opción válida");
-        }
+            switch (opcion) {
+                case 1:
+                    login(estudiantes, scanner);
+                    break;
+                case 2:
+                    createAccount(estudiantes, scanner);
+                    break;
+                case 3:
+                    salir = true;
+                    break;
+                default:
+                    System.out.println("Error, seleccione una opción válida");
+            }
+        } while (!salir);
+
+        System.exit(0);
     }
 
     private static void displaySubjects(Estudiante usuario) {
+        int totalCreditos = 0;
         System.out.println("Materias de \"" + usuario.getNombre() + "\":");
         for (Materia materia : usuario.getMaterias()) {
-            System.out.println(" | " + materia.getNombre() + " tiene un valor de " + materia.getCreditos() + " creditos | ");
+            System.out.println("| " + materia.getNombre() + " tiene un valor de " + materia.getCreditos() + " creditos | Nota promedio: " + materia.getPromedio());
+            totalCreditos = totalCreditos + materia.getCreditos();
+        }
+        calculateGradePerformance(usuario.getPromedio(), totalCreditos);
+    }
+
+    private static void calculateGradePerformance(double promedio, int totalCreditos) {
+        if (totalCreditos >= 8) {
+            System.out.println("---- Su promedio en este semestre es de: " + promedio + " teniendo un total de " + totalCreditos + " creditos ----");
+        } else {
+            System.out.println("No se puede calcular el promedio del semestre porque tiene menos de 8 creditos registrados en total");
         }
     }
 
@@ -88,7 +105,7 @@ public class Main {
         System.out.println("Contraseña: " + usuario.getContrasena());
     }
 
-    private static void principalMenu(ArrayList<Estudiante> estudiantes, Estudiante usuario, Scanner scanner) {
+    private static void principalMenu(Estudiante usuario, Scanner scanner) {
         boolean salir = false;
 
         do {
@@ -97,8 +114,8 @@ public class Main {
             System.out.println("2- Agregar materia");
             System.out.println("3- Ver notas");
             System.out.println("4- Agregar nota");
-            System.out.println("4- Ver información de la cuenta");
-            System.out.println("5- Cerrar sesión");
+            System.out.println("5- Ver información de la cuenta");
+            System.out.println("6- Cerrar sesión");
 
             int opcion = scanner.nextInt();
 
@@ -127,7 +144,6 @@ public class Main {
         } while (!salir);
 
         System.out.println("Cerro sesión " + usuario.getNombre());
-        startMenu(estudiantes);
     }
 
     private static void loginMenu(ArrayList<Estudiante> estudiantes, Scanner scanner) {
@@ -186,7 +202,7 @@ public class Main {
         System.out.println("Digite el numero de creditos que vale \"" + nombre + "\"");
         int creditos = scanner.nextInt();
 
-        estudiante.addMateria(new Materia(nombre, creditos));
+        estudiante.addMateria(nombre, creditos);
         System.out.println("Se agrego correctamente la materia \"" + nombre + "\"");
     }
 
@@ -219,7 +235,7 @@ public class Main {
         System.out.println("Digite el porcentaje de la nota:");
         int porcentaje = scanner.nextInt();
 
-        materia.addNota(new Nota(nota, porcentaje));
+        materia.addNota(nota, porcentaje);
         System.out.println("La nota fue añadida correctamente en la materia \"" + materia.getNombre() + "\"");
     }
 
@@ -247,53 +263,6 @@ public class Main {
 
         System.out.println("Inicio sesión correctamente");
         System.out.println("Bienvenid@ " + loginUsuario.getUsuario());
-        principalMenu(estudiantes, loginUsuario, scanner);
-
-
-        String desicion;
-
-        System.out.println("¿Desea añadir notas a alguna de sus materias?");
-        desicion = scanner.nextLine().toLowerCase();
-
-        if (desicion.equals("si")) {
-
-            int selectMateria;
-            do {
-                System.out.println("Seleccione la materia a la que desea añadir la nota, digitando el número que tiene cada una asociado");
-
-                int contador = 1;
-                for (Materia materia : loginUsuario.getMaterias()) {
-                    System.out.println(contador + " | " + materia.getNombre() + " tiene un valor de " + materia.getCreditos() + " creditos | ");
-                    contador++;
-                }
-
-                selectMateria = scanner.nextInt();
-
-                if (selectMateria > loginUsuario.getMaterias().size() || selectMateria < 1) {
-                    System.out.println("Digita un número valido para seleccionar materia");
-                }
-            } while (selectMateria > loginUsuario.getMaterias().size());
-
-            Materia editMateria = loginUsuario.getMaterias().get(selectMateria - 1);
-            String continuar;
-            do {
-                System.out.println("Ingrese la nota de la materia \"" + editMateria.getNombre() + "\":");
-                double valor = scanner.nextDouble();
-                System.out.println("Ingrese el porcentaje para la nota:");
-                int porcentaje = scanner.nextInt();
-
-                Nota nota = new Nota(valor, porcentaje);
-                editMateria.addNota(nota);
-
-                System.out.println("¿Quiere agregar otra nota a la materia \"" + editMateria.getNombre() + "\"? Si/No");
-                scanner.nextLine();
-                continuar = scanner.nextLine().toLowerCase();
-            } while (continuar.equals("si"));
-
-            editMateria.getInfo();
-            System.out.println("El promedio en esta materia es de: " + editMateria.getPromedio());
-            System.out.println("El promedio general es de: " + loginUsuario.getPromedio());
-
-        }
+        principalMenu(loginUsuario, scanner);
     }
 }
