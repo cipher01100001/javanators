@@ -219,10 +219,12 @@ public class Main {
             for (Materia materia : materias) {
                 System.out.println(contador + "- " + materia.getNombre());
                 contador++;
+                error = false;
             }
             opcion = scanner.nextInt();
             if (opcion > materias.size() || opcion <= 0) {
                 System.out.println("Error, seleccione una opción válida");
+                contador = 1;
                 error = true;
             }
         } while (error);
