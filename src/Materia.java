@@ -22,15 +22,6 @@ public class Materia {
         return creditos;
     }
 
-    public void getInfo() {
-        System.out.println("Materia: " + this.nombre);
-        System.out.println("Número de creditos: " + this.creditos);
-        System.out.println("Notas: ");
-        for (Nota nota : this.notas) {
-            System.out.println(" | " + nota.getValor() + " con un porcentaje de: " + nota.getPorcentaje() + "% | ");
-        }
-    }
-
     public ArrayList<Nota> getNotas() {
         return this.notas;
     }
