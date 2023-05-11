@@ -1,12 +1,14 @@
 import java.util.ArrayList;
 
 public class Estudiante {
+    private int id;
     private String nombre;
     private String usuario;
     private String contrasena;
     private ArrayList<Materia> materias;
 
-    public Estudiante(String nombre, String usuario, String contrasena) {
+    public Estudiante(int id, String nombre, String usuario, String contrasena) {
+        this.id = id;
         this.nombre = nombre;
         this.usuario = usuario;
         this.contrasena = contrasena;
@@ -29,8 +31,8 @@ public class Estudiante {
         return materias;
     }
 
-    public void addMateria(String nombre, int creditos, int semestre) {
-        materias.add(new Materia(nombre, creditos, semestre));
+    public void addMateria(int id, String nombre, int creditos, int semestre) {
+        materias.add(new Materia(id, nombre, creditos, semestre));
     }
 
 }

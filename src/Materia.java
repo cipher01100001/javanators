@@ -1,13 +1,16 @@
 import java.util.ArrayList;
 
 public class Materia {
+
+    private int id;
     private String nombre;
     private int creditos;
     private int semestre;
     private double notaAcumulada;
     private ArrayList<Nota> notas;
 
-    public Materia(String nombre, int creditos, int semestre) {
+    public Materia(int id, String nombre, int creditos, int semestre) {
+        this.id = id;
         this.nombre = nombre;
         this.creditos = creditos;
         this.semestre = semestre;
@@ -15,8 +18,8 @@ public class Materia {
         this.notas = new ArrayList<>();
     }
 
-    public void addNota(double valor, int porcentaje) {
-        notas.add(new Nota(valor, porcentaje));
+    public void addNota(int id, double valor, int porcentaje) {
+        notas.add(new Nota(id, valor, porcentaje));
     }
 
     public String getNombre() {

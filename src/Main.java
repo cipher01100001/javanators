@@ -5,41 +5,41 @@ public class Main {
     public static void main(String[] args) {
 
         ArrayList<Estudiante> estudiantes = new ArrayList<>();
-        addEstudiante(estudiantes, "Carlos", "ca123", "123");
+        addEstudiante(estudiantes,1, "Carlos", "ca123", "123");
 
-        estudiantes.get(0).addMateria("Lógica y representación", 3, 1);
-        estudiantes.get(0).getMaterias().get(0).addNota(3.7, 20);
-        estudiantes.get(0).getMaterias().get(0).addNota(4.1, 30);
-        estudiantes.get(0).getMaterias().get(0).addNota(2.7, 50);
+        estudiantes.get(0).addMateria(1, "Lógica y representación", 3, 1);
+        estudiantes.get(0).getMaterias().get(0).addNota(1, 3.7, 20);
+        estudiantes.get(0).getMaterias().get(0).addNota(2, 4.1, 30);
+        estudiantes.get(0).getMaterias().get(0).addNota(3, 2.7, 50);
 
-        estudiantes.get(0).addMateria("Matemáticas Discretas", 2, 1);
-        estudiantes.get(0).getMaterias().get(1).addNota(2.7, 20);
-        estudiantes.get(0).getMaterias().get(1).addNota(3.1, 30);
-        estudiantes.get(0).getMaterias().get(1).addNota(4.7, 50);
+        estudiantes.get(0).addMateria(2, "Matemáticas Discretas", 2, 1);
+        estudiantes.get(0).getMaterias().get(1).addNota(4, 2.7, 20);
+        estudiantes.get(0).getMaterias().get(1).addNota(5, 3.1, 30);
+        estudiantes.get(0).getMaterias().get(1).addNota(6, 4.7, 50);
 
-        addEstudiante(estudiantes, "nadie", "nadi123", "321");
+        addEstudiante(estudiantes, 2, "nadie", "nadi123", "321");
 
-        estudiantes.get(1).addMateria("Lógica y representación", 2, 1);
-        estudiantes.get(1).getMaterias().get(0).addNota(2.7, 20);
-        estudiantes.get(1).getMaterias().get(0).addNota(3.1, 30);
-        estudiantes.get(1).getMaterias().get(0).addNota(1.7, 50);
+        estudiantes.get(1).addMateria(3, "Lógica y representación", 2, 1);
+        estudiantes.get(1).getMaterias().get(0).addNota(7, 2.7, 20);
+        estudiantes.get(1).getMaterias().get(0).addNota(8, 3.1, 30);
+        estudiantes.get(1).getMaterias().get(0).addNota(9, 1.7, 50);
 
-        estudiantes.get(1).addMateria("Matemáticas Discretas", 3, 1);
-        estudiantes.get(1).getMaterias().get(1).addNota(1.7, 20);
-        estudiantes.get(1).getMaterias().get(1).addNota(2.1, 30);
-        estudiantes.get(1).getMaterias().get(1).addNota(3.7, 50);
+        estudiantes.get(1).addMateria(4, "Matemáticas Discretas", 3, 1);
+        estudiantes.get(1).getMaterias().get(1).addNota(10, 1.7, 20);
+        estudiantes.get(1).getMaterias().get(1).addNota(11, 2.1, 30);
+        estudiantes.get(1).getMaterias().get(1).addNota(12, 3.7, 50);
 
-        estudiantes.get(1).addMateria("English", 4, 2);
-        estudiantes.get(1).getMaterias().get(2).addNota(4.7, 20);
-        estudiantes.get(1).getMaterias().get(2).addNota(1.1, 30);
-        estudiantes.get(1).getMaterias().get(2).addNota(3.2, 25);
-        estudiantes.get(1).getMaterias().get(2).addNota(3.8, 25);
+        estudiantes.get(1).addMateria(5, "English", 4, 2);
+        estudiantes.get(1).getMaterias().get(2).addNota(13, 4.7, 20);
+        estudiantes.get(1).getMaterias().get(2).addNota(14, 1.1, 30);
+        estudiantes.get(1).getMaterias().get(2).addNota(15, 3.2, 25);
+        estudiantes.get(1).getMaterias().get(2).addNota(16, 3.8, 25);
 
         startMenu(estudiantes);
     }
 
-    private static void addEstudiante(ArrayList<Estudiante> estudiantes, String nombre, String usuario, String contrasena) {
-        estudiantes.add(new Estudiante(nombre, usuario, contrasena));
+    private static void addEstudiante(ArrayList<Estudiante> estudiantes, int id, String nombre, String usuario, String contrasena) {
+        estudiantes.add(new Estudiante(id, nombre, usuario, contrasena));
     }
 
     private static void startMenu(ArrayList<Estudiante> estudiantes) {
@@ -199,7 +199,7 @@ public class Main {
         } while (!contrasena.equals(confirmcontrasena));
 
 
-        Estudiante estudiante = new Estudiante(nombre, usuario, contrasena);
+        Estudiante estudiante = new Estudiante(3, nombre, usuario, contrasena);
         estudiantes.add(estudiante);
         System.out.println("Se ha registrado correctamente");
     }
@@ -216,7 +216,7 @@ public class Main {
         System.out.println("Digite el semestre de la materia");
         int semestre = scanner.nextInt();
 
-        estudiante.addMateria(nombre, creditos, semestre);
+        estudiante.addMateria(21, nombre, creditos, semestre);
         System.out.println("Se agrego correctamente la materia \"" + nombre + "\"");
     }
 
@@ -249,7 +249,7 @@ public class Main {
         System.out.println("Digite el porcentaje de la nota:");
         int porcentaje = scanner.nextInt();
 
-        materia.addNota(nota, porcentaje);
+        materia.addNota(9, nota, porcentaje);
         System.out.println("La nota fue añadida correctamente en la materia \"" + materia.getNombre() + "\"");
     }
 
