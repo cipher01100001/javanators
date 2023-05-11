@@ -3,11 +3,15 @@ import java.util.ArrayList;
 public class Materia {
     private String nombre;
     private int creditos;
+    private int semestre;
+    private double notaAcumulada;
     private ArrayList<Nota> notas;
 
-    public Materia(String nombre, int creditos) {
+    public Materia(String nombre, int creditos, int semestre) {
         this.nombre = nombre;
         this.creditos = creditos;
+        this.semestre = semestre;
+        this.notaAcumulada = 0;
         this.notas = new ArrayList<>();
     }
 
@@ -22,20 +26,14 @@ public class Materia {
         return creditos;
     }
 
+    public double getNotaAcumulada() {
+        return notaAcumulada;
+    }
+
+    public int getSemestre() {
+        return semestre;
+    }
     public ArrayList<Nota> getNotas() {
         return this.notas;
     }
-
-    public double getPromedio() {
-        double notasTotal = 0.0;
-        double porcentajeTotal = 0.0;
-
-        for (Nota nota : this.notas) {
-            notasTotal += nota.getValor() * nota.getPorcentaje();
-            porcentajeTotal += nota.getPorcentaje();
-        }
-        return notasTotal / porcentajeTotal;
-
-    }
-
 }

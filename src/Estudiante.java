@@ -4,13 +4,13 @@ public class Estudiante {
     private String nombre;
     private String usuario;
     private String contrasena;
-    private ArrayList<Semestre> semestres;
+    private ArrayList<Materia> materias;
 
     public Estudiante(String nombre, String usuario, String contrasena) {
         this.nombre = nombre;
         this.usuario = usuario;
         this.contrasena = contrasena;
-        this.semestres = new ArrayList<>();
+        this.materias = new ArrayList<>();
     }
 
     public String getNombre() {
@@ -25,12 +25,12 @@ public class Estudiante {
         return contrasena;
     }
 
-    public ArrayList<Semestre> getSemestres() {
-        return semestres;
+    public ArrayList<Materia> getMaterias() {
+        return materias;
     }
 
-    public void addSemestre(int numero) {
-        semestres.add(new Semestre(numero));
+    public void addMateria(String nombre, int creditos, int semestre) {
+        materias.add(new Materia(nombre, creditos, semestre));
     }
 
 }
