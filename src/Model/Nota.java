@@ -1,3 +1,5 @@
+package Model;
+
 public class Nota {
     private int id;
     private double valor;
