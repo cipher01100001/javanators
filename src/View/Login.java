@@ -1,14 +1,17 @@
 package View;
 
+import Model.Estudiante;
+
 import javax.swing.*;
 import java.awt.*;
+import java.util.ArrayList;
 
 public class Login extends JFrame {
     private JButton iniciarSesionBtn;
     private JTextField texto1;
     private JTextField texto2;
 
-    public Login() {
+    public Login(ArrayList<Estudiante> estudiantes) {
 
         setTitle("Iniciar sesión");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -35,7 +38,7 @@ public class Login extends JFrame {
         add(panel);
 
         iniciarSesionBtn.addActionListener(e -> {
-            Dashboard dashboard = new Dashboard();
+            Dashboard dashboard = new Dashboard(estudiantes);
             dashboard.setVisible(true);
             this.setVisible(false);
         });

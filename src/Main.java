@@ -40,7 +40,7 @@ public class Main {
         estudiantes.get(1).getMaterias().get(2).addNota(16, 3.8, 25);
 
         //controller.startMenu(estudiantes);
-        new Login();
+        new Login(estudiantes);
     }
 
 }
